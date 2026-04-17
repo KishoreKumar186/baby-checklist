@@ -484,7 +484,9 @@ body {
   border-bottom: 1px solid var(--border);
   padding: 10px 16px;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
+  gap: 10px;
   position: sticky;
   top: 58px; /* below tabs */
   z-index: 9;
@@ -725,4 +727,140 @@ body {
 
 .btn-primary:hover {
   background: #3d5248;
+}
+
+/* ── Sync button & status dot ── */
+.sync-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1.5px solid var(--border);
+  background: white;
+  color: var(--deep);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.sync-btn:hover {
+  border-color: var(--sage);
+  color: var(--sage);
+}
+
+.sync-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.sync-dot-idle    { background: #ccc; }
+.sync-dot-syncing { background: #f0a500; animation: pulse 1s infinite; }
+.sync-dot-synced  { background: #27ae60; }
+.sync-dot-error   { background: #c0392b; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── Sync Panel (uses existing .modal + .modal-overlay) ── */
+.sync-status-banner {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.sync-status-syncing { background: #fff8e1; color: #b7770d; }
+.sync-status-synced  { background: #eafaf1; color: #1e8449; }
+.sync-status-error   { background: #fdecea; color: #c0392b; }
+
+.sync-section {
+  margin-bottom: 4px;
+}
+
+.sync-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--deep);
+  margin-bottom: 10px;
+}
+
+.sync-code-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cream);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.sync-code {
+  flex: 1;
+  font-family: 'Courier New', monospace;
+  font-size: 11px;
+  color: var(--deep);
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+.btn-copy {
+  flex-shrink: 0;
+  border: 1.5px solid var(--border);
+  background: white;
+  color: var(--deep);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.btn-copy:hover {
+  border-color: var(--sage);
+  color: var(--sage);
+}
+
+.sync-hint {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.sync-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 18px 0;
+}
+
+.sync-input-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.sync-input-row .form-input {
+  flex: 1;
+  min-width: 0;
+}
+
+.sync-error {
+  font-size: 12px;
+  color: #c0392b;
+  margin-top: 8px;
 }

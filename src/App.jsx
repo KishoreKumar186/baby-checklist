@@ -1,48 +1,28 @@
-import { useState, useEffect, useCallback } from 'react'
-import { checklistData } from './data/checklist'
+import { useState, useCallback } from 'react'
+import { useSyncedChecklist } from './hooks/useSyncedChecklist'
 import Header from './components/Header'
 import Tabs from './components/Tabs'
 import SectionContent from './components/SectionContent'
 import ItemModal from './components/ItemModal'
+import SyncPanel from './components/SyncPanel'
 import './App.css'
 
-const DATA_KEY = 'baby-checklist-data'
-const CHECKED_KEY = 'baby-checklist-checked'
-
 function App() {
-  const [sections, setSections] = useState(() => {
-    try {
-      const saved = localStorage.getItem(DATA_KEY)
-      return saved ? JSON.parse(saved) : checklistData
-    } catch {
-      return checklistData
-    }
-  })
-
-  const [checkedItems, setCheckedItems] = useState(() => {
-    try {
-      const saved = localStorage.getItem(CHECKED_KEY)
-      return saved ? new Set(JSON.parse(saved)) : new Set()
-    } catch {
-      return new Set()
-    }
-  })
+  const {
+    sections,
+    setSections,
+    checkedItems,
+    setCheckedItems,
+    syncId,
+    syncStatus,
+    connectSyncId,
+    isSyncEnabled,
+  } = useSyncedChecklist()
 
   const [activeTab, setActiveTab] = useState('hospital')
   const [editMode, setEditMode] = useState(false)
   const [modal, setModal] = useState(null) // { mode, sectionId, categoryId, item }
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(DATA_KEY, JSON.stringify(sections))
-    } catch { /* unavailable */ }
-  }, [sections])
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(CHECKED_KEY, JSON.stringify([...checkedItems]))
-    } catch { /* unavailable */ }
-  }, [checkedItems])
+  const [showSync, setShowSync] = useState(false)
 
   const toggleItem = useCallback((id) => {
     setCheckedItems((prev) => {
@@ -51,7 +31,7 @@ function App() {
       else next.add(id)
       return next
     })
-  }, [])
+  }, [setCheckedItems])
 
   // ── CRUD ────────────────────────────────────────────────────────────
 
@@ -69,7 +49,7 @@ function App() {
         }
       )
     )
-  }, [])
+  }, [setSections])
 
   const updateItem = useCallback((sectionId, categoryId, itemId, itemData) => {
     setSections((prev) =>
@@ -85,7 +65,7 @@ function App() {
         }
       )
     )
-  }, [])
+  }, [setSections])
 
   const deleteItem = useCallback((sectionId, categoryId, itemId) => {
     setSections((prev) =>
@@ -106,7 +86,7 @@ function App() {
       next.delete(itemId)
       return next
     })
-  }, [])
+  }, [setSections, setCheckedItems])
 
   // ── Modal handlers ───────────────────────────────────────────────────
 
@@ -148,6 +128,12 @@ function App() {
       <Tabs sections={sections} activeTab={activeTab} onTabChange={setActiveTab} />
 
       <div className="edit-bar">
+        {isSyncEnabled && (
+          <button className="sync-btn" onClick={() => setShowSync(true)}>
+            <span className={`sync-dot sync-dot-${syncStatus}`} />
+            Sync
+          </button>
+        )}
         <button
           className={`edit-toggle${editMode ? ' active' : ''}`}
           onClick={() => setEditMode((v) => !v)}
@@ -176,6 +162,15 @@ function App() {
           item={modal.item}
           onSave={handleModalSave}
           onClose={() => setModal(null)}
+        />
+      )}
+
+      {showSync && (
+        <SyncPanel
+          syncId={syncId}
+          syncStatus={syncStatus}
+          connectSyncId={connectSyncId}
+          onClose={() => setShowSync(false)}
         />
       )}
     </div>
