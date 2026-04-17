@@ -477,3 +477,252 @@ body {
     font-size: 26px;
   }
 }
+
+/* ── Edit Bar ── */
+.edit-bar {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  top: 58px; /* below tabs */
+  z-index: 9;
+}
+
+.edit-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1.5px solid var(--border);
+  background: white;
+  color: var(--deep);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.edit-toggle:hover {
+  border-color: var(--warm);
+  color: var(--warm);
+}
+
+.edit-toggle.active {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: white;
+}
+
+/* ── Item: edit mode ── */
+.item.edit-mode {
+  cursor: default;
+}
+
+.item.edit-mode:active {
+  transform: none;
+}
+
+.item-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.btn-edit,
+.btn-delete {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  transition: all 0.15s;
+}
+
+.btn-edit:hover {
+  border-color: var(--gold);
+  background: #fff9f2;
+}
+
+.btn-delete:hover {
+  border-color: #c0392b;
+  background: #ffe8e8;
+}
+
+/* ── Add item button ── */
+.add-item-btn {
+  width: 100%;
+  padding: 10px;
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+  background: none;
+  color: #999;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  margin-top: 4px;
+}
+
+.add-item-btn:hover {
+  border-color: var(--sage);
+  color: var(--sage);
+  background: var(--light-sage);
+}
+
+/* ── Modal ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .modal-overlay {
+    align-items: center;
+    padding: 20px;
+  }
+}
+
+.modal {
+  background: white;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-width: 520px;
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 20px 20px 36px;
+}
+
+@media (min-width: 640px) {
+  .modal {
+    border-radius: 16px;
+    padding: 28px;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: var(--deep);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #999;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1;
+  transition: background 0.15s;
+}
+
+.modal-close:hover {
+  background: #f5f5f5;
+  color: var(--deep);
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--deep);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.form-hint {
+  text-transform: none;
+  font-weight: 400;
+  color: #999;
+  letter-spacing: 0;
+}
+
+.form-input {
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--deep);
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+  resize: vertical;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.form-input:focus {
+  border-color: var(--sage);
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding-top: 6px;
+}
+
+.btn-cancel {
+  border: 1.5px solid var(--border);
+  background: white;
+  color: #888;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.btn-cancel:hover {
+  border-color: #bbb;
+  color: var(--deep);
+}
+
+.btn-primary {
+  border: none;
+  background: var(--deep);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.btn-primary:hover {
+  background: #3d5248;
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function ChecklistItem({ item, checked, onToggle }) {
+function ChecklistItem({ item, checked, onToggle, editMode, onEdit, onDelete }) {
   const [tipOpen, setTipOpen] = useState(false)
 
   const handleTipToggle = (e) => {
@@ -10,17 +10,19 @@ function ChecklistItem({ item, checked, onToggle }) {
 
   return (
     <div
-      className={`item${checked ? ' checked' : ''}`}
-      onClick={onToggle}
-      role="checkbox"
-      aria-checked={checked}
-      tabIndex={0}
-      onKeyDown={(e) => e.key === 'Enter' && onToggle()}
+      className={`item${checked ? ' checked' : ''}${editMode ? ' edit-mode' : ''}`}
+      onClick={editMode ? undefined : onToggle}
+      role={editMode ? undefined : 'checkbox'}
+      aria-checked={editMode ? undefined : checked}
+      tabIndex={editMode ? undefined : 0}
+      onKeyDown={editMode ? undefined : (e) => e.key === 'Enter' && onToggle()}
     >
       <div className="item-top">
-        <div className="checkbox" aria-hidden="true">
-          <span className="checkmark">✓</span>
-        </div>
+        {!editMode && (
+          <div className="checkbox" aria-hidden="true">
+            <span className="checkmark">✓</span>
+          </div>
+        )}
         <div className="item-text">
           <div className="item-name">{item.name}</div>
 
@@ -34,7 +36,7 @@ function ChecklistItem({ item, checked, onToggle }) {
 
           {item.tip && <div className="item-tip">{item.tip}</div>}
 
-          {item.expandedTip && (
+          {item.expandedTip && !editMode && (
             <>
               <span className="tip-toggle" onClick={handleTipToggle}>
                 💡 What to look for {tipOpen ? '▴' : '▾'}
@@ -46,9 +48,28 @@ function ChecklistItem({ item, checked, onToggle }) {
           )}
         </div>
 
-        <div className={`priority-badge priority-${item.priority}`}>
-          {item.priority === 'must' ? 'Must' : 'Good'}
-        </div>
+        {editMode ? (
+          <div className="item-actions">
+            <button
+              className="btn-edit"
+              onClick={(e) => { e.stopPropagation(); onEdit() }}
+              aria-label="Edit item"
+            >
+              ✏️
+            </button>
+            <button
+              className="btn-delete"
+              onClick={(e) => { e.stopPropagation(); onDelete() }}
+              aria-label="Delete item"
+            >
+              🗑️
+            </button>
+          </div>
+        ) : (
+          <div className={`priority-badge priority-${item.priority}`}>
+            {item.priority === 'must' ? 'Must' : 'Good'}
+          </div>
+        )}
       </div>
     </div>
   )

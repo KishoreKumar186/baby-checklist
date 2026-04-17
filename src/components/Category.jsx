@@ -1,6 +1,6 @@
 import ChecklistItem from './ChecklistItem'
 
-function Category({ category, checkedItems, onToggle }) {
+function Category({ category, checkedItems, onToggle, editMode, onOpenAdd, onOpenEdit, onDelete }) {
   const total = category.items.length
   const done = category.items.filter((item) => checkedItems.has(item.id)).length
   const allDone = done === total && total > 0
@@ -20,8 +20,17 @@ function Category({ category, checkedItems, onToggle }) {
           item={item}
           checked={checkedItems.has(item.id)}
           onToggle={() => onToggle(item.id)}
+          editMode={editMode}
+          onEdit={() => onOpenEdit(item)}
+          onDelete={() => onDelete(item.id, item.name)}
         />
       ))}
+
+      {editMode && (
+        <button className="add-item-btn" onClick={onOpenAdd}>
+          + Add Item
+        </button>
+      )}
     </div>
   )
 }
