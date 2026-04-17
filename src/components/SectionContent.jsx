@@ -37,18 +37,6 @@ function SectionContent({ section, checkedItems, onToggle }) {
           onToggle={onToggle}
         />
       ))}
-
-      {section.hasNote && (
-        <div className="note-card">
-          <h3>🧡 A note for you, Kishore</h3>
-          <p>
-            You&apos;re doing a great job preparing. The most important thing in those first 4
-            weeks isn&apos;t any product — it&apos;s rest, patience, and making sure your wife
-            feels supported. Take shifts at night when possible. One fed, rested, emotionally
-            supported mom is worth more than any gadget on this list.
-          </p>
-        </div>
-      )}
     </>
   )
 }
