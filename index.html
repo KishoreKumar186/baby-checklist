@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby & Mom Delivery Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FDF6EE;
+    --blush: #F5C4B0;
+    --sage: #A8C5B5;
+    --warm: #E8956D;
+    --deep: #2C3E35;
+    --gold: #C9933A;
+    --light-sage: #E8F0EC;
+    --light-blush: #FBF0EA;
+    --border: #E2D5C8;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+background: var(–cream);
+font-family: ‘DM Sans’, sans-serif;
+color: var(–deep);
+min-height: 100vh;
+}
+
+.hero {
+background: var(–deep);
+padding: 40px 24px 36px;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+.hero::before {
+content: ‘’;
+position: absolute;
+top: -40px; right: -40px;
+width: 180px; height: 180px;
+background: radial-gradient(circle, rgba(200,147,58,0.25) 0%, transparent 70%);
+border-radius: 50%;
+}
+.hero::after {
+content: ‘’;
+position: absolute;
+bottom: -30px; left: -20px;
+width: 140px; height: 140px;
+background: radial-gradient(circle, rgba(168,197,181,0.2) 0%, transparent 70%);
+border-radius: 50%;
+}
+.hero-tag {
+display: inline-block;
+background: var(–gold);
+color: white;
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 2px;
+text-transform: uppercase;
+padding: 4px 12px;
+border-radius: 20px;
+margin-bottom: 14px;
+}
+.hero h1 {
+font-family: ‘Playfair Display’, serif;
+color: white;
+font-size: 28px;
+line-height: 1.2;
+margin-bottom: 10px;
+}
+.hero p {
+color: rgba(255,255,255,0.6);
+font-size: 13px;
+font-weight: 300;
+}
+
+.progress-bar {
+background: rgba(255,255,255,0.12);
+border-radius: 20px;
+height: 6px;
+margin-top: 20px;
+overflow: hidden;
+}
+.progress-fill {
+height: 100%;
+background: linear-gradient(90deg, var(–sage), var(–gold));
+border-radius: 20px;
+transition: width 0.4s ease;
+width: 0%;
+}
+.progress-label {
+color: rgba(255,255,255,0.5);
+font-size: 11px;
+margin-top: 6px;
+}
+
+.tabs {
+display: flex;
+background: white;
+border-bottom: 2px solid var(–border);
+position: sticky;
+top: 0;
+z-index: 10;
+overflow-x: auto;
+scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+flex: 1;
+min-width: 90px;
+padding: 14px 10px;
+text-align: center;
+font-size: 12px;
+font-weight: 500;
+color: #999;
+cursor: pointer;
+border-bottom: 2px solid transparent;
+margin-bottom: -2px;
+transition: all 0.2s;
+white-space: nowrap;
+}
+.tab.active {
+color: var(–deep);
+border-bottom-color: var(–warm);
+}
+.tab-icon { font-size: 16px; display: block; margin-bottom: 3px; }
+
+.content { padding: 20px 16px 40px; max-width: 600px; margin: 0 auto; }
+
+.section { display: none; }
+.section.active { display: block; }
+
+.section-intro {
+background: var(–light-sage);
+border-left: 3px solid var(–sage);
+padding: 12px 16px;
+border-radius: 0 8px 8px 0;
+margin-bottom: 20px;
+font-size: 13px;
+color: var(–deep);
+line-height: 1.5;
+}
+
+.category {
+margin-bottom: 28px;
+}
+.category-header {
+display: flex;
+align-items: center;
+gap: 8px;
+margin-bottom: 12px;
+}
+.category-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 17px;
+color: var(–deep);
+}
+.category-count {
+background: var(–border);
+color: #888;
+font-size: 11px;
+padding: 2px 8px;
+border-radius: 10px;
+margin-left: auto;
+}
+.category-count.done {
+background: var(–sage);
+color: white;
+}
+
+.item {
+background: white;
+border: 1.5px solid var(–border);
+border-radius: 12px;
+padding: 14px 14px 14px 12px;
+margin-bottom: 10px;
+transition: all 0.2s;
+cursor: pointer;
+-webkit-tap-highlight-color: transparent;
+}
+.item:active { transform: scale(0.98); }
+.item.checked {
+background: var(–light-sage);
+border-color: var(–sage);
+}
+.item-top {
+display: flex;
+align-items: flex-start;
+gap: 12px;
+}
+.checkbox {
+width: 22px; height: 22px;
+border: 2px solid var(–border);
+border-radius: 6px;
+flex-shrink: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.2s;
+margin-top: 1px;
+}
+.item.checked .checkbox {
+background: var(–sage);
+border-color: var(–sage);
+}
+.checkmark {
+color: white;
+font-size: 13px;
+opacity: 0;
+transition: opacity 0.15s;
+}
+.item.checked .checkmark { opacity: 1; }
+
+.item-text { flex: 1; }
+.item-name {
+font-size: 14px;
+font-weight: 500;
+line-height: 1.3;
+transition: color 0.2s;
+}
+.item.checked .item-name {
+color: #888;
+text-decoration: line-through;
+}
+.item-brand {
+margin-top: 6px;
+font-size: 12px;
+color: var(–warm);
+font-weight: 500;
+}
+.item-brand span {
+background: var(–light-blush);
+padding: 2px 8px;
+border-radius: 10px;
+margin-right: 4px;
+display: inline-block;
+margin-bottom: 3px;
+}
+.item-tip {
+margin-top: 6px;
+font-size: 12px;
+color: #888;
+line-height: 1.4;
+}
+.tip-toggle {
+font-size: 11px;
+color: var(–gold);
+cursor: pointer;
+margin-top: 5px;
+display: inline-flex;
+align-items: center;
+gap: 3px;
+}
+.tip-content {
+display: none;
+margin-top: 8px;
+padding: 10px 12px;
+background: #FFF9F2;
+border-radius: 8px;
+font-size: 12px;
+line-height: 1.5;
+color: #666;
+border-left: 2px solid var(–gold);
+}
+.tip-content.open { display: block; }
+
+.priority-badge {
+font-size: 10px;
+padding: 2px 7px;
+border-radius: 8px;
+font-weight: 500;
+flex-shrink: 0;
+}
+.priority-must {
+background: #FFE8E8;
+color: #C0392B;
+}
+.priority-good {
+background: #FFF4E0;
+color: #E67E22;
+}
+
+.summary-strip {
+background: white;
+border: 1.5px solid var(–border);
+border-radius: 12px;
+padding: 14px 16px;
+display: flex;
+justify-content: space-around;
+text-align: center;
+margin-bottom: 24px;
+}
+.summary-num {
+font-family: ‘Playfair Display’, serif;
+font-size: 22px;
+color: var(–deep);
+}
+.summary-label {
+font-size: 11px;
+color: #999;
+margin-top: 2px;
+}
+
+.note-card {
+background: linear-gradient(135deg, var(–deep), #3D5248);
+border-radius: 16px;
+padding: 18px;
+color: white;
+margin-top: 24px;
+}
+.note-card h3 {
+font-family: ‘Playfair Display’, serif;
+font-size: 16px;
+margin-bottom: 8px;
+color: var(–blush);
+}
+.note-card p {
+font-size: 12px;
+line-height: 1.6;
+color: rgba(255,255,255,0.75);
+}
+</style>
+
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">Your Readiness Guide</div>
+  <h1>Baby & Mom<br>Delivery Checklist</h1>
+  <p>Curated for Indian families · Budget-conscious · Skin-safe</p>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-label" id="progressLabel">0 of 0 items checked</div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('hospital')">
+    <span class="tab-icon">🏥</span>Hospital Bag
+  </div>
+  <div class="tab" onclick="switchTab('baby')">
+    <span class="tab-icon">👶</span>Baby Essentials
+  </div>
+  <div class="tab" onclick="switchTab('mom')">
+    <span class="tab-icon">💛</span>Mom Recovery
+  </div>
+  <div class="tab" onclick="switchTab('home')">
+    <span class="tab-icon">🏠</span>Home Setup
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- HOSPITAL BAG -->
+
+  <div class="section active" id="section-hospital">
+    <div class="section-intro">
+      Pack this bag by <strong>Week 36</strong>. Keep it near your door. Both you and your partner should know where it is.
+    </div>
+
+```
+<div class="summary-strip">
+  <div><div class="summary-num" id="hosp-checked">0</div><div class="summary-label">Checked</div></div>
+  <div><div class="summary-num" id="hosp-total">0</div><div class="summary-label">Total Items</div></div>
+  <div><div class="summary-num" id="hosp-must">0</div><div class="summary-label">Must-Haves</div></div>
+</div>
+
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">📄 Documents</div>
+    <div class="category-count" id="cat-docs-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="docs" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Hospital registration & antenatal records</div>
+        <div class="item-tip">All scan reports, blood reports, prescriptions from your OB-GYN in one folder</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="docs" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">ID proofs + insurance card</div>
+        <div class="item-tip">Aadhar, insurance policy document, and a small amount of cash</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+</div>
+
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">👗 For Mom (Hospital Stay)</div>
+    <div class="category-count" id="cat-momhosp-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="momhosp" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Front-open nightgowns (2–3)</div>
+        <div class="item-brand"><span>Morph Maternity</span><span>Nykaa Fashion</span></div>
+        <div class="item-tip">Essential for nursing. Front-open makes breastfeeding much easier post-delivery.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="momhosp" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Maternity/nursing bra (2)</div>
+        <div class="item-brand"><span>Enamor Maternity</span><span>Morph Maternity</span></div>
+        <div class="item-tip">Get wire-free, soft cotton. Buy one size up from your current size — breasts swell post-delivery.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="momhosp" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Maternity pads / heavy-flow pads (1 pack)</div>
+        <div class="item-brand"><span>Whisper Overnight</span><span>Stayfree Secure</span></div>
+        <div class="item-tip">Hospital may provide some, but having your own long/overnight pads is more comfortable. Avoid scented ones.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="momhosp" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Comfortable slippers / flip-flops</div>
+        <div class="item-brand"><span>Paragon</span><span>VKC Pride</span></div>
+        <div class="item-tip">Feet swell during/after labor. Bring slip-ons a size larger than usual.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="momhosp" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Toiletries (small kit)</div>
+        <div class="item-tip">Toothbrush, mild face wash, lip balm, hair ties. Keep it minimal — 2–3 day stay.</div>
+        <span class="tip-toggle" onclick="toggleTip(event, this)">💡 What to look for ▾</span>
+        <div class="tip-content">Avoid strongly perfumed products. Baby will be close to you and strong smells can irritate their senses. Plain Cetaphil or Dove works fine.</div>
+      </div>
+      <div class="priority-badge priority-good">Good</div>
+    </div>
+  </div>
+</div>
+
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">🍼 For Baby (Hospital)</div>
+    <div class="category-count" id="cat-babyhosp-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="babyhosp" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Onesies / jhablas (3–4 sets)</div>
+        <div class="item-brand"><span>Snugkins</span><span>Kicks & Crawl</span><span>FirstCry basics</span></div>
+        <div class="item-tip">100% cotton, no synthetic. Sizes 0–3M. Snaps at the bottom are better than pullovers for newborns.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="babyhosp" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Swaddle / muslin wrap (2)</div>
+        <div class="item-brand"><span>Moms Co</span><span>Superbottoms Muselina</span></div>
+        <div class="item-tip">Muslin is the best — breathable, soft, doesn't overheat baby. 100×100 cm size is ideal.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="babyhosp" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Newborn diapers (half pack ~25 pcs)</div>
+        <div class="item-brand"><span>Superbottoms Dry Feel</span><span>Pampers New Baby</span></div>
+        <div class="item-tip">Don't buy a full pack of NB size — babies outgrow it in 2–3 weeks. Superbottoms has good Indian baby fit and is gentler on skin.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="hospital" data-cat="babyhosp" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Baby cap + mittens + socks set</div>
+        <div class="item-brand"><span>LuvLap</span><span>Mee Mee</span></div>
+        <div class="item-tip">Hospitals are often air-conditioned. Keep baby's extremities warm right after birth.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- BABY ESSENTIALS -->
+
+  <div class="section" id="section-baby">
+    <div class="section-intro">
+      These are the items you'll actually use daily for the first 4 weeks. No fancy gadgets, no items that collect dust.
+    </div>
+
+```
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">🛁 Bathing & Skincare</div>
+    <div class="category-count" id="cat-bath-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="bath" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Baby bath tub</div>
+        <div class="item-brand"><span>LuvLap</span><span>Mee Mee</span></div>
+        <div class="item-tip">Get one with a newborn sling/insert so you have both hands free. Anti-slip base is important.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="bath" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Mild baby wash + shampoo (2-in-1)</div>
+        <div class="item-brand"><span>The Moms Co Natural</span><span>Mamaearth Gentle</span><span>Cetaphil Baby</span></div>
+        <div class="item-tip">No sulfates, no parabens, tear-free formula. Cetaphil is dermatologist-recommended and most gentle for eczema-prone skin.</div>
+        <span class="tip-toggle" onclick="toggleTip(event, this)">💡 What to look for ▾</span>
+        <div class="tip-content">Look for: Tear-free, pH-balanced (around 5.5), no artificial fragrance, no SLS/SLES. For the first month, plain water is actually sufficient for most days — save bath wash for 2–3x a week.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="bath" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Baby moisturizer / lotion</div>
+        <div class="item-brand"><span>The Moms Co</span><span>Cetaphil Baby</span><span>Himalaya Gentle</span></div>
+        <div class="item-tip">Newborn skin peels naturally in week 1–2. A gentle daily moisturizer helps. Avoid coconut oil for first 4 weeks — it can disrupt skin barrier for some newborns.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="bath" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Diaper rash cream</div>
+        <div class="item-brand"><span>Sebamed Baby</span><span>Chicco Bum Cream</span><span>Himalaya Diaper Rash</span></div>
+        <div class="item-tip">Apply at every change to prevent rash before it starts. Look for zinc oxide as active ingredient.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="bath" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Soft hooded towels (2)</div>
+        <div class="item-brand"><span>Moms Co Bamboo</span><span>Snugkins</span></div>
+        <div class="item-tip">Bamboo-cotton blend is softer than regular cotton. The hood keeps baby's head warm right after bath.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+</div>
+
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">🩲 Diapering</div>
+    <div class="category-count" id="cat-diaper-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="diaper" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Diapers (NB + Size 1 combo)</div>
+        <div class="item-brand"><span>Superbottoms Dry Feel</span><span>Pampers New Baby-Dry</span></div>
+        <div class="item-tip">Buy ~25 NB + 1 pack Size 1. Superbottoms fits Indian babies better, has a softer wetness indicator. Avoid Huggies Wonder Pants for very early weeks — less gentle on stump.</div>
+        <span class="tip-toggle" onclick="toggleTip(event, this)">💡 What to look for ▾</span>
+        <div class="tip-content">Must have umbilical cord notch (cut-out) on NB diapers to protect the stump. Superbottoms and Pampers New Baby both have this. Change every 3–4 hours, not just when heavy.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="diaper" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Water wipes or cotton pads + water</div>
+        <div class="item-brand"><span>WaterWipes</span><span>Pigeon Cotton Pads</span></div>
+        <div class="item-tip">For the first 4 weeks, plain water + cotton pads is gentler than any wipe. WaterWipes (99.9% water) are okay when you're out.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="diaper" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Changing mat / waterproof sheet</div>
+        <div class="item-brand"><span>LuvLap</span><span>Mee Mee</span></div>
+        <div class="item-tip">A simple waterproof sheet is enough. No need for a full changing table — floor or bed works fine.</div>
+      </div>
+      <div class="priority-badge priority-good">Good</div>
+    </div>
+  </div>
+</div>
+
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">🍼 Feeding</div>
+    <div class="category-count" id="cat-feed-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="feed" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Nursing pillow</div>
+        <div class="item-brand"><span>Chicco Boppy-style</span><span>Lunavie</span><span>Generic C-shape on Amazon</span></div>
+        <div class="item-tip">Supports baby during breastfeeding and reduces arm/shoulder fatigue. Game-changer for long feeding sessions at night.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="feed" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Manual breast pump</div>
+        <div class="item-brand"><span>Pigeon Manual</span><span>Medela Harmony</span></div>
+        <div class="item-tip">Even if planning to exclusively breastfeed, a manual pump helps with engorgement and allows your partner to give a bottle occasionally.</div>
+        <span class="tip-toggle" onclick="toggleTip(event, this)">💡 What to look for ▾</span>
+        <div class="tip-content">Pigeon is budget-friendly (~₹800–1200) and widely available. Medela is premium but significantly better suction. Electric pumps are unnecessary unless mom is going back to work soon.</div>
+      </div>
+      <div class="priority-badge priority-good">Good</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="feed" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Feeding bottles (2) — only if needed</div>
+        <div class="item-brand"><span>Pigeon SofTouch</span><span>Dr. Brown's</span></div>
+        <div class="item-tip">Buy only if you anticipate supplementing or pumping. Pigeon SofTouch has a natural latch nipple — less nipple confusion. Buy first, don't stock up.</div>
+      </div>
+      <div class="priority-badge priority-good">Good</div>
+    </div>
+  </div>
+</div>
+
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">😴 Sleep</div>
+    <div class="category-count" id="cat-sleep-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="sleep" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Firm, flat sleeping surface (mattress)</div>
+        <div class="item-brand"><span>Luvlap Cozy</span><span>Mee Mee crib mattress</span></div>
+        <div class="item-tip">No pillow, no fluffy bedding for newborns. A thin firm mattress on the bed or in a crib is safest (back-sleeping always).</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="baby" data-cat="sleep" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Muslin swaddles (3–4)</div>
+        <div class="item-brand"><span>Superbottoms Muselina</span><span>Moms Co Organic Muslin</span></div>
+        <div class="item-tip">Swaddling helps baby sleep longer by preventing the startle reflex. 100% muslin is breathable and safe. Multi-purpose — also used as burp cloth, shade cover, changing mat.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- MOM RECOVERY -->
+
+  <div class="section" id="section-mom">
+    <div class="section-intro">
+      Mom's recovery matters just as much. These help with the physical and emotional demands of the first 4 weeks.
+    </div>
+
+```
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">🌸 Post-Delivery Recovery</div>
+    <div class="category-count" id="cat-recovery-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="mom" data-cat="recovery" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Maternity pads (2–3 packs)</div>
+        <div class="item-brand"><span>Whisper Overnight XL</span><span>Stayfree Secure Nights</span></div>
+        <div class="item-tip">Lochia (post-delivery bleeding) can last 4–6 weeks. Stock up. Change every 3–4 hours. Avoid tampons completely.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="mom" data-cat="recovery" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Postpartum belly binder / abdominal wrap</div>
+        <div class="item-brand"><span>Morph Maternity Binder</span><span>Pregabelly</span></div>
+        <div class="item-tip">Helps with back support and abdominal recovery post-vaginal or C-section delivery. Not for shaping — purely for support and pain relief. Wear for first 6 weeks.</div>
+        <span class="tip-toggle" onclick="toggleTip(event, this)">💡 What to look for ▾</span>
+        <div class="tip-content">For C-section: Get one with a low-cut design that doesn't press on the incision. Breathable fabric is important — India's heat makes non-breathable binders very uncomfortable.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="mom" data-cat="recovery" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Sitz bath tub (for vaginal delivery)</div>
+        <div class="item-brand"><span>Generic on Amazon India (~₹250–400)</span></div>
+        <div class="item-tip">Soaking perineum in warm water 2–3x daily speeds healing of stitches. Fits over toilet seat. Skip if C-section.</div>
+      </div>
+      <div class="priority-badge priority-good">Good</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="mom" data-cat="recovery" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Stool softener / fiber supplement</div>
+        <div class="item-brand"><span>Cremaffin Plus (doctor-approved)</span><span>Naturolax</span></div>
+        <div class="item-tip">First bowel movement post-delivery is scary for most moms — especially with stitches. Ask your OB-GYN to prescribe a stool softener. Keep high-fiber foods ready.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+</div>
+
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">🤱 Breastfeeding Support</div>
+    <div class="category-count" id="cat-bf-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="mom" data-cat="bf" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Nipple cream / lanolin balm</div>
+        <div class="item-brand"><span>Medela Purelan</span><span>Motherlove Nipple Cream</span><span>Lansinoh</span></div>
+        <div class="item-tip">Cracked, sore nipples in week 1–2 are very common. Apply after every feed. Look for food-safe, lanolin-based — no need to wipe off before baby feeds.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="mom" data-cat="bf" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Breast pads / nursing pads (washable)</div>
+        <div class="item-brand"><span>Morph Maternity washable</span><span>Medela disposable</span></div>
+        <div class="item-tip">Milk leaks between feeds — without pads, your clothes get wet constantly. Washable ones save money. Disposables are good for hospital stay and outings.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="mom" data-cat="bf" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Lactation supplement (optional)</div>
+        <div class="item-brand"><span>Lactare (TTK Healthcare)</span><span>MotherHorlicks</span></div>
+        <div class="item-tip">If milk supply feels low in week 2–3, these help. Lactare is doctor-recommended and widely available. Traditional foods like methi, doodhi, jeera also work well.</div>
+      </div>
+      <div class="priority-badge priority-good">Good</div>
+    </div>
+  </div>
+</div>
+
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">🍲 Nutrition & Rest</div>
+    <div class="category-count" id="cat-nutrition-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="mom" data-cat="nutrition" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Postnatal vitamins (iron + calcium + D3)</div>
+        <div class="item-brand"><span>Shelcal (calcium)</span><span>Feronia XT (iron)</span><span>OB Complete</span></div>
+        <div class="item-tip">Continue prenatal vitamins for at least 3 months post-delivery if breastfeeding. Ask your OB for her preferred postnatal pack.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="mom" data-cat="nutrition" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Healthy snack stash for night feeds</div>
+        <div class="item-tip">Breastfeeding burns ~500 extra calories. Mom will be hungry at 3am — keep nuts, makhana, dry fruits, energy bars at her side. Dehydration drops milk supply fast — keep a large water bottle by the nursing spot.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="mom" data-cat="nutrition" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Donut / hemorrhoid cushion</div>
+        <div class="item-brand"><span>Generic ring cushion on Amazon (~₹400–600)</span></div>
+        <div class="item-tip">Sitting is painful post-vaginal delivery or if hemorrhoids developed during pregnancy. A ring cushion makes nursing and eating much more comfortable.</div>
+      </div>
+      <div class="priority-badge priority-good">Good</div>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- HOME SETUP -->
+
+  <div class="section" id="section-home">
+    <div class="section-intro">
+      Minimum home setup you need before baby arrives. Don't buy everything at once — see what you actually need.
+    </div>
+
+```
+<div class="category">
+  <div class="category-header">
+    <div class="category-title">🏡 Before Baby Arrives</div>
+    <div class="category-count" id="cat-before-count">0/0</div>
+  </div>
+
+  <div class="item" data-section="home" data-cat="before" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Wash all baby clothes before first use</div>
+        <div class="item-tip">Wash with mild baby detergent (not adult detergent) before baby wears them. New fabric has chemical residue.</div>
+        <div class="item-brand"><span>Genteel Baby Detergent</span><span>Pigeon Laundry Detergent</span></div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="home" data-cat="before" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Mosquito protection for sleeping area</div>
+        <div class="item-brand"><span>GoodKnight fabric roll-on (baby-safe)</span><span>Himalaya Mosquito repellent patches</span></div>
+        <div class="item-tip">No mats/coils/sprays near baby. Fabric roll-on or patches on clothing are safest for under 3 months.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="home" data-cat="before" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Thermometer (digital)</div>
+        <div class="item-brand"><span>Omron MC-246</span><span>Dr. Morepen MT-111</span></div>
+        <div class="item-tip">Any rectal/axillary digital thermometer works. Fever in a newborn (>100.4°F) is a medical emergency — you need to check quickly and accurately.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="home" data-cat="before" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Nasal aspirator</div>
+        <div class="item-brand"><span>Pigeon Nasal Aspirator</span><span>NoseFrida (if budget allows)</span></div>
+        <div class="item-tip">Babies can't blow their nose. When congested, they can't feed. A nasal aspirator is a lifesaver. NoseFrida is messy but more effective. Pigeon bulb is simpler.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="home" data-cat="before" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Infant nail scissors / file</div>
+        <div class="item-brand"><span>Chicco safety nail scissors</span><span>Pigeon nail care set</span></div>
+        <div class="item-tip">Newborn nails are sharp and grow fast. Baby will scratch their own face. Trim weekly — best done when baby is asleep.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="home" data-cat="before" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Baby laundry done, area prepped</div>
+        <div class="item-tip">Designate a spot for: diaper station, feeding corner, sleeping area. Having a predictable "station" makes night routines much easier for both of you.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+
+  <div class="item" data-section="home" data-cat="before" onclick="toggleItem(this)">
+    <div class="item-top">
+      <div class="checkbox"><span class="checkmark">✓</span></div>
+      <div class="item-text">
+        <div class="item-name">Pediatrician identified & number saved</div>
+        <div class="item-tip">Have your pediatrician's clinic number and an after-hours emergency contact saved before discharge. Baby's first check-up is usually within 3–5 days of birth.</div>
+      </div>
+      <div class="priority-badge priority-must">Must</div>
+    </div>
+  </div>
+</div>
+
+<div class="note-card">
+  <h3>🧡 A note for you, Kishore</h3>
+  <p>You're doing a great job preparing. The most important thing in those first 4 weeks isn't any product — it's rest, patience, and making sure your wife feels supported. Take shifts at night when possible. One fed, rested, emotionally supported mom is worth more than any gadget on this list.</p>
+</div>
+```
+
+  </div>
+
+</div>
+
+<script>
+  const tabIds = ['hospital','baby','mom','home'];
+
+  function switchTab(id) {
+    tabIds.forEach((t,i) => {
+      document.querySelectorAll('.tab')[i].classList.toggle('active', t===id);
+      document.getElementById('section-'+t).classList.toggle('active', t===id);
+    });
+    updateProgress();
+  }
+
+  function toggleItem(el) {
+    el.classList.toggle('checked');
+    updateProgress();
+    updateCatCounts();
+  }
+
+  function toggleTip(e, el) {
+    e.stopPropagation();
+    const tip = el.nextElementSibling;
+    tip.classList.toggle('open');
+    el.textContent = tip.classList.contains('open')
+      ? el.textContent.replace('▾','▴')
+      : el.textContent.replace('▴','▾');
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.item');
+    const checked = document.querySelectorAll('.item.checked');
+    const pct = all.length ? (checked.length / all.length * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent =
+      `${checked.length} of ${all.length} items checked`;
+  }
+
+  function updateCatCounts() {
+    const cats = {
+      'docs': 'cat-docs-count',
+      'momhosp': 'cat-momhosp-count',
+      'babyhosp': 'cat-babyhosp-count',
+      'bath': 'cat-bath-count',
+      'diaper': 'cat-diaper-count',
+      'feed': 'cat-feed-count',
+      'sleep': 'cat-sleep-count',
+      'recovery': 'cat-recovery-count',
+      'bf': 'cat-bf-count',
+      'nutrition': 'cat-nutrition-count',
+      'before': 'cat-before-count'
+    };
+
+    for (const [cat, countId] of Object.entries(cats)) {
+      const items = document.querySelectorAll(`[data-cat="${cat}"]`);
+      const done = document.querySelectorAll(`[data-cat="${cat}"].checked`);
+      const el = document.getElementById(countId);
+      if (el) {
+        el.textContent = `${done.length}/${items.length}`;
+        el.className = 'category-count' + (done.length === items.length && items.length > 0 ? ' done' : '');
+      }
+    }
+
+    // Hospital section summary
+    const hospItems = document.querySelectorAll('[data-section="hospital"]');
+    const hospChecked = document.querySelectorAll('[data-section="hospital"].checked');
+    const hospMust = document.querySelectorAll('[data-section="hospital"] .priority-must');
+    if (document.getElementById('hosp-total')) {
+      document.getElementById('hosp-total').textContent = hospItems.length;
+      document.getElementById('hosp-checked').textContent = hospChecked.length;
+      document.getElementById('hosp-must').textContent = hospMust.length;
+    }
+  }
+
+  // Initialize counts
+  window.onload = () => {
+    updateProgress();
+    updateCatCounts();
+  };
+</script>
+
+</body>
+</html>
